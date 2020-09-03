@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listing Customers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:switch="${customers}">
+    <h2 th:case="null">No customers yet!</h2>
+    <div th:case="*">
+        <h2>Customers</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>toString</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${customers}">
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.toString()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/signup">Add a new user</a></p>
+</div>
+</body>
+</html>
