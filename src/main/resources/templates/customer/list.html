@@ -26,12 +26,49 @@
                 <td th:text="${customer.firstName}"></td>
                 <td th:text="${customer.lastName}"></td>
                 <td><a th:href="@{/customer/edit/{id}(id=${customer.id})}">Edit</a></td>
-                <td><a th:href="@{/customer/delete/{id}(id=${customer.id})}">Delete</a></td>
+                <td>
+                    <button type="button" class="open-DeleteCustomerDialog g btn btn-primary" data-toggle="modal" data-target="#DeleteModal"  th:data-id="${customer.id}" >
+                        Delete
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
     <p><a href="/customer/create">Add a new customer</a></p>
 </div>
+
+<!-- Trigger -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            Are you sure to delete this customer?
+                <div type="text" name="modalCustomerId" id="modalCustomerId" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Nope</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/customer/delete/'+document.getElementById('modalCustomerId').value" data-dismiss="modal">Yep</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", ".open-DeleteCustomerDialog", function () {
+        var myCustomerId = $(this).data('id');
+        $(".modal-body #modalCustomerId").val( myCustomerId );
+
+    });
+</script>
 </body>
 </html>
