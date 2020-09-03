@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create customer</title>
+    <div th:include="layouts/_headIncludes"></div>
 </head>
 <body>
 <h2>Create customer</h2>
@@ -12,7 +13,7 @@
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
     <label for="lastName">Last Name</label>
     <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
-    <input type="submit" value="Add Customer">
+    <input type="submit" value="Add Customer" class="btn btn-primary">
 </form>
 
 </body>
