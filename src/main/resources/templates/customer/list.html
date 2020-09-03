@@ -13,7 +13,8 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>toString</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -21,12 +22,15 @@
             <tbody>
             <tr th:each="customer : ${customers}">
                 <td th:text="${customer.id}"></td>
-                <td th:text="${customer.toString()}"></td>
+                <td th:text="${customer.firstName}"></td>
+                <td th:text="${customer.lastName}"></td>
+                <td><a th:href="@{/customer/edit/{id}(id=${customer.id})}">Edit</a></td>
+                <td><a th:href="@{/customer/delete/{id}(id=${customer.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/signup">Add a new user</a></p>
+    <p><a href="/customer/create">Add a new customer</a></p>
 </div>
 </body>
 </html>
