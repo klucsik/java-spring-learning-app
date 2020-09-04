@@ -3,12 +3,17 @@ package eu.pontsystems.kriszgyakorlo.demo.controller;
 import eu.pontsystems.kriszgyakorlo.demo.entity.Customer;
 import eu.pontsystems.kriszgyakorlo.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -23,8 +28,13 @@ public class CustomerController {
     } //this is a constructor, connect the controller to the repo. ( Bigger projects should use a sevice between these layers)
 
     @GetMapping("/customers")
-    public String listCustomers(Model model) {
-        model.addAttribute("customers", customerRepository.findAll());
+    public String listCustomers(@RequestParam(name="page", required = false, defaultValue = "0")Integer page,
+                                @RequestParam(name="pagesize", required = false, defaultValue = "10")Integer pagesize,
+                                Model model) {
+        Pageable pageparams = PageRequest.of(page, pagesize);
+
+        Page<Customer> customers_page = customerRepository.findAll(pageparams);
+        model.addAttribute("customers", customers_page);
         return "customer/list";
     }
 

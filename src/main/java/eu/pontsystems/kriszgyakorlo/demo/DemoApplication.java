@@ -23,10 +23,6 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
 
     @Bean
     public CommandLineRunner demo(CustomerRepository repository) {
@@ -37,6 +33,26 @@ public class DemoApplication {
             repository.save(new Customer("Kim", "Bauer"));
             repository.save(new Customer("David", "Palmer"));
             repository.save(new Customer("Michelle", "Dessler"));
+            repository.save(new Customer("1Jack", "Bauer"));
+            repository.save(new Customer("1Chloe", "O'Brian"));
+            repository.save(new Customer("1Kim", "Bauer"));
+            repository.save(new Customer("1David", "Palmer"));
+            repository.save(new Customer("1Michelle", "Dessler"));
+            repository.save(new Customer("2Jack", "Bauer"));
+            repository.save(new Customer("2Chloe", "O'Brian"));
+            repository.save(new Customer("2Kim", "Bauer"));
+            repository.save(new Customer("2David", "Palmer"));
+            repository.save(new Customer("2Michelle", "Dessler"));
+            repository.save(new Customer("3Jack", "Bauer"));
+            repository.save(new Customer("3Chloe", "O'Brian"));
+            repository.save(new Customer("3Kim", "Bauer"));
+            repository.save(new Customer("3David", "Palmer"));
+            repository.save(new Customer("3Michelle", "Dessler"));
+            repository.save(new Customer("4Jack", "Bauer"));
+            repository.save(new Customer("4Chloe", "O'Brian"));
+            repository.save(new Customer("4Kim", "Bauer"));
+            repository.save(new Customer("4David", "Palmer"));
+            repository.save(new Customer("4Michelle", "Dessler"));
 
             // fetch all customers
             log.info("Customers found with findAll():");

@@ -12,4 +12,22 @@
     $('[data-toggle="tooltip"]').tooltip()
 })
 </script>
+<script>
+    function GetURLParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
+</script>
+<div type="text" name="currentPage" id="currentPage" value=""></div>
+<div type="text" name="pageSize" id="pageSize" value=""/></div>
 

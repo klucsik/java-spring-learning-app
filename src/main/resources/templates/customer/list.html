@@ -39,6 +39,11 @@
             </tr>
             </tbody>
         </table>
+        <div class="btn-group-sm" role="group" aria-label="Pagination">
+            <button type="button" class="btn btn-primary paginationNextButton" onclick="window.location.href='/customers?page='+document.getElementById('currentPage').value+1">next</button>
+
+
+        </div>
     </div>
     <p><a href="/customer/create" class="btn btn-primary">Add a new customer</a></p>
 </div>
@@ -71,6 +76,13 @@
         $(".modal-body #modalCustomerId").val( myCustomerId );
 
     });
+    $(document).on("click", ".paginationNextButton", function () {
+        var page = GetURLParameter('page');
+        var pagesize = GetURLParameter('pagesize');
+        $("#currentPage").val( page );
+        $("#pageSize").val( pagesize );
+    });
+
 </script>
 </body>
 </html>
