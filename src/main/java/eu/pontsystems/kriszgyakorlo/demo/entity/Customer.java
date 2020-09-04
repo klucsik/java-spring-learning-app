@@ -1,10 +1,11 @@
 package eu.pontsystems.kriszgyakorlo.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 public class Customer {
@@ -28,6 +29,13 @@ public class Customer {
         return String.format("Customer[id=%d, firstName='%s', lastName='%s']",id,firstName,lastName);
     }
 
+    @Column(updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime lastUpdatedAt;
+
     public Long getId() {
         return id;
     }
@@ -38,6 +46,14 @@ public class Customer {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getLastUpdatedAt() {
+        return lastUpdatedAt;
     }
 
     public void setFirstName(String firstName) {
