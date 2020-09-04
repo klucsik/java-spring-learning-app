@@ -8,11 +8,15 @@
 <body>
 <h2>Update customer</h2>
 <form action="#" th:action="@{/customer/update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
-    <label for="firstName"> First Name</label>
+    <label for="firstName" data-toggle="tooltip" data-placement="top" title="Filling this field is mandatory">
+        First Name<sup class="star">*</sup>
+    </label>
     <input type="text" th:field="*{firstName}" id="firstName">
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+    <br>
     <label for="lastName">Last Name</label>
     <input type="text" th:field="*{lastName}" id="lastName">
+    <br>
     <input type="submit" value="Update Customer" class="btn btn-primary">
 </form>
 
