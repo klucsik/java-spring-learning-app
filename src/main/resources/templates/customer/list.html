@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en", xmlns:th="http://www.thymeleaf.org">
+<html lang="en" , xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Listing Customers</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <div th:include="layouts/_headIncludes"></div>
 </head>
 <body>
-<div th:switch="${customers}">
+<div th:switch="${customerPage}">
     <h2 th:case="null">No customers yet!</h2>
-    <div th:case="*">
+    <ul th:case="*">
         <h2>Customers</h2>
         <table>
             <thead>
@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="customer : ${customers}">
+            <tr th:each="customer : ${customerPage}">
                 <td th:text="${customer.id}"></td>
                 <td th:text="${customer.firstName}"></td>
                 <td th:text="${customer.lastName}"></td>
@@ -31,25 +31,41 @@
                 <td>
                     <div class="btn-group" role="group" aria-label="Actions">
                         <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary btn-sm">Edit</a>
-                        <button type="button" class="open-DeleteCustomerDialog g btn btn-primary btn-sm" data-toggle="modal" data-target="#DeleteModal"  th:data-id="${customer.id}" >
-                        Delete
+                        <button type="button" class="open-DeleteCustomerDialog g btn btn-primary btn-sm"
+                                data-toggle="modal" data-target="#DeleteModal" th:data-id="${customer.id}">
+                            Delete
                         </button>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
-        <div class="btn-group-sm" role="group" aria-label="Pagination">
-            <button type="button" class="btn btn-primary paginationNextButton" onclick="window.location.href='/customers?page='+document.getElementById('currentPage').value+1">next</button>
+        <ul class="pagination" th:if="${customerPage.totalPages > 0}">
+            <li class="page-item" th:classappend="${customerPage.getNumber()+1<=1 ? 'disabled': ''}">
+                <a class="page-link"
+                   th:href="@{/customers(size=${customerPage.size}, page=${customerPage.getNumber()})}">Previous</a>
+            </li>
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}"
+            th:classappend="${customerPage.getNumber()+1==pageNumber ? 'active': ''}">
+                <a class="page-link"
+                   th:href="@{/customers(size=${customerPage.size}, page=${pageNumber})}"
+                   th:text=${pageNumber}
+                ></a>
+            </li>
 
-
-        </div>
-    </div>
-    <p><a href="/customer/create" class="btn btn-primary">Add a new customer</a></p>
+            <li class="page-item"
+                th:classappend="${customerPage.getNumber()+1>=customerPage.getTotalPages() ? 'disabled': ''}">
+                <a class="page-link"
+                   th:href="@{/customers(size=${customerPage.size}, page=${customerPage.getNumber()}+2)}">Next</a>
+            </li>
+        </ul>
+</div>
+<p><a href="/customer/create" class="btn btn-primary">Add a new customer</a></p>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,12 +75,15 @@
                 </button>
             </div>
             <div class="modal-body">
-            Are you sure to delete this customer?
+                Are you sure to delete this customer?
                 <div type="text" name="modalCustomerId" id="modalCustomerId" value=""/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Nope</button>
-                <button type="button" class="btn btn-danger" onclick="window.location.href='/customer/delete/'+document.getElementById('modalCustomerId').value" data-dismiss="modal">Yep</button>
+                <button type="button" class="btn btn-danger"
+                        onclick="window.location.href='/customer/delete/'+document.getElementById('modalCustomerId').value"
+                        data-dismiss="modal">Yep
+                </button>
             </div>
         </div>
     </div>
@@ -73,14 +92,14 @@
 <script>
     $(document).on("click", ".open-DeleteCustomerDialog", function () {
         var myCustomerId = $(this).data('id');
-        $(".modal-body #modalCustomerId").val( myCustomerId );
+        $(".modal-body #modalCustomerId").val(myCustomerId);
 
     });
     $(document).on("click", ".paginationNextButton", function () {
         var page = GetURLParameter('page');
         var pagesize = GetURLParameter('pagesize');
-        $("#currentPage").val( page );
-        $("#pageSize").val( pagesize );
+        $("#currentPage").val(page);
+        $("#pageSize").val(pagesize);
     });
 
 </script>

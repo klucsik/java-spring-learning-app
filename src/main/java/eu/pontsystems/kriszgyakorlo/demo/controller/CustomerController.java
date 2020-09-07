@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Controller
@@ -28,13 +31,20 @@ public class CustomerController {
     } //this is a constructor, connect the controller to the repo. ( Bigger projects should use a sevice between these layers)
 
     @GetMapping("/customers")
-    public String listCustomers(@RequestParam(name="page", required = false, defaultValue = "0")Integer page,
+    public String listCustomers(@RequestParam(name="page", required = false, defaultValue = "1")Integer page,
                                 @RequestParam(name="pagesize", required = false, defaultValue = "10")Integer pagesize,
                                 Model model) {
-        Pageable pageparams = PageRequest.of(page, pagesize);
+        Pageable pageparams = PageRequest.of(page-1, pagesize); //shift the numbering start from 0 to 1 for humanreadable
+        Page<Customer> customerPage = customerRepository.findAll(pageparams);
+        model.addAttribute("customerPage", customerPage);
 
-        Page<Customer> customers_page = customerRepository.findAll(pageparams);
-        model.addAttribute("customers", customers_page);
+        int totalPages = customerPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
         return "customer/list";
     }
 
