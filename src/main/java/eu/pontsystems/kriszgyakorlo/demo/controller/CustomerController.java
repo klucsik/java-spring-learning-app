@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,10 +30,10 @@ public class CustomerController {
     } //this is a constructor, connect the controller to the repo. ( Bigger projects should use a sevice between these layers)
 
     @GetMapping("/customers")
-    public String listCustomers(@RequestParam(name="page", required = false, defaultValue = "1")Integer page,
-                                @RequestParam(name="pagesize", required = false, defaultValue = "10")Integer pagesize,
+    public String listCustomers(@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+                                @RequestParam(name = "pagesize", required = false, defaultValue = "10") Integer pagesize,
                                 Model model) {
-        Pageable pageparams = PageRequest.of(page-1, pagesize); //shift the numbering start from 0 to 1 for humanreadable
+        Pageable pageparams = PageRequest.of(page - 1, pagesize); //shift the numbering start from 0 to 1 for humanreadable
         Page<Customer> customerPage = customerRepository.findAll(pageparams);
         model.addAttribute("customerPage", customerPage);
 
@@ -67,14 +66,15 @@ public class CustomerController {
     @GetMapping("/customer/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         Customer customer = customerRepository.findById(id);
-               // .orElseThrow(() -> new IllegalArgumentException(" Invalid user Id: " + id));  // TODO: why these are cannot accessed?
+        // .orElseThrow(() -> new IllegalArgumentException(" Invalid user Id: " + id));  // TODO: why these are cannot accessed?
 
         model.addAttribute("customer", customer);
         return "customer/update";
     }
+
     @PostMapping("/customer/update/{id}")
-    public String updateCustomer( @Valid Customer customer, BindingResult result, Model model){
-        if (result.hasErrors()){
+    public String updateCustomer(@Valid Customer customer, BindingResult result, Model model) {
+        if (result.hasErrors()) {
             return "customer/update";
         }
 
@@ -86,7 +86,7 @@ public class CustomerController {
     @GetMapping("customer/delete/{id}")
     public String deleteCustomer(@PathVariable("id") long id, Model model) {
         Customer customer = customerRepository.findById(id);
-              //  .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
+        //  .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
         customerRepository.delete(customer);
         model.addAttribute("users", customerRepository.findAll());
         return "redirect:/customers";

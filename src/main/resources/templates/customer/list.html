@@ -46,7 +46,7 @@
                    th:href="@{/customers(size=${customerPage.size}, page=${customerPage.getNumber()})}">Previous</a>
             </li>
             <li class="page-item" th:each="pageNumber : ${pageNumbers}"
-            th:classappend="${customerPage.getNumber()+1==pageNumber ? 'active': ''}">
+                th:classappend="${customerPage.getNumber()+1==pageNumber ? 'active': ''}">
                 <a class="page-link"
                    th:href="@{/customers(size=${customerPage.size}, page=${pageNumber})}"
                    th:text=${pageNumber}
