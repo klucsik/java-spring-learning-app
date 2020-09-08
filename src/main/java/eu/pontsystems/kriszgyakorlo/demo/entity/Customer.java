@@ -23,10 +23,10 @@ public class Customer {
     @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
-
-    // The default constructor exists only for the sake of JPA. You do not use it directly, so it is designated as protected.
     @UpdateTimestamp
     private LocalDateTime lastUpdatedAt;
+    private String HideThis; //a sample field which will not be accessible from DTO
+    private String color; // a sample field which will be mapped to another named field in DTO
 
     protected Customer() {
     }
