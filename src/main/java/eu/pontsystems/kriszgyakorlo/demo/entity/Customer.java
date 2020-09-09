@@ -1,6 +1,8 @@
 package eu.pontsystems.kriszgyakorlo.demo.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -28,8 +32,6 @@ public class Customer {
     private String HideThis; //a sample field which will not be accessible from DTO
     private String color; // a sample field which will be mapped to another named field in DTO
 
-    protected Customer() {
-    }
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;

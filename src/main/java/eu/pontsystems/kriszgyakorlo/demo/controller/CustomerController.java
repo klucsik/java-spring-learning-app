@@ -1,11 +1,11 @@
 package eu.pontsystems.kriszgyakorlo.demo.controller;
 
+import eu.pontsystems.kriszgyakorlo.demo.dto.CustomerDto;
 import eu.pontsystems.kriszgyakorlo.demo.entity.Customer;
 import eu.pontsystems.kriszgyakorlo.demo.repository.CustomerRepository;
+import eu.pontsystems.kriszgyakorlo.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +23,8 @@ import java.util.stream.IntStream;
 @Controller
 public class CustomerController {
     protected CustomerRepository customerRepository;
+    @Autowired
+    private CustomerService service;
 
     @Autowired
     public CustomerController(CustomerRepository customerRepository) {
@@ -33,8 +35,8 @@ public class CustomerController {
     public String listCustomers(@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
                                 @RequestParam(name = "pagesize", required = false, defaultValue = "10") Integer pagesize,
                                 Model model) {
-        Pageable pageparams = PageRequest.of(page - 1, pagesize); //shift the numbering start from 0 to 1 for humanreadable
-        Page<Customer> customerPage = customerRepository.findAll(pageparams);
+
+        Page<CustomerDto> customerPage = service.list(page, pagesize);
         model.addAttribute("customerPage", customerPage);
 
         int totalPages = customerPage.getTotalPages();
@@ -53,42 +55,38 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/create")
-    public String CreateCustomer(@Valid Customer customer, BindingResult result, Model model) {
+    public String CreateCustomer(@Valid CustomerDto customerDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "customer/create";
         }
 
-        customerRepository.save(customer);
-        model.addAttribute("customers", customerRepository.findAll()); // TODO: this is needed for the redirect context?
+        service.save(customerDto);
         return "redirect:/customers";
     }
 
     @GetMapping("/customer/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
-        Customer customer = customerRepository.findById(id);
+        CustomerDto customerDto = service.find(id);
         // .orElseThrow(() -> new IllegalArgumentException(" Invalid user Id: " + id));  // TODO: why these are cannot accessed?
 
-        model.addAttribute("customer", customer);
+        model.addAttribute("customer", customerDto);
         return "customer/update";
     }
 
     @PostMapping("/customer/update/{id}")
-    public String updateCustomer(@Valid Customer customer, BindingResult result, Model model) {
+    public String updateCustomer(@Valid CustomerDto customerDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "customer/update";
         }
-
-        customerRepository.save(customer);
-        model.addAttribute("customers", customerRepository.findAll());
+        service.save(customerDto);
         return "redirect:/customers";
     }
 
     @GetMapping("customer/delete/{id}")
     public String deleteCustomer(@PathVariable("id") long id, Model model) {
-        Customer customer = customerRepository.findById(id);
+        CustomerDto customerDto = service.find(id);
         //  .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
-        customerRepository.delete(customer);
-        model.addAttribute("users", customerRepository.findAll());
+        service.delete(customerDto);
         return "redirect:/customers";
     }
 

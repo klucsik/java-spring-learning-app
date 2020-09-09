@@ -3,11 +3,9 @@ package eu.pontsystems.kriszgyakorlo.demo.controller;
 import eu.pontsystems.kriszgyakorlo.demo.dto.CustomerDto;
 import eu.pontsystems.kriszgyakorlo.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -24,4 +22,18 @@ public class CustomerRESTController {
             return ResponseEntity.ok(foundCustomer);
         }
     }
+
+    @GetMapping("")
+    public ResponseEntity<Page<CustomerDto>> list(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(name = "pagesize", required = false, defaultValue = "10") Integer pagesize
+    ) {
+        Page<CustomerDto> customerPage = service.list(page, pagesize);
+        if (customerPage == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(customerPage);
+        }
+    }
+
 }

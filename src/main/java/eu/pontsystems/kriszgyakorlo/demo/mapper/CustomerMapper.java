@@ -12,4 +12,9 @@ public interface CustomerMapper {
 
     @Mapping(source = "color", target = "favouriteColor")
     CustomerDto customerToCustomerDto(Customer customer);
+
+    @Mapping(source = "favouriteColor", target = "color")
+    Customer customerDtoToCustomer(CustomerDto customerDto);
+
+
 }
