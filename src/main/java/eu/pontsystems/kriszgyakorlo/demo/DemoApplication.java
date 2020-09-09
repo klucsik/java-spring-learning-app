@@ -25,59 +25,41 @@ public class DemoApplication {
 
 
     @Bean
-    public CommandLineRunner demo(CustomerRepository repository) {
+    public CommandLineRunner demo(CustomerRepository customerRepository) {
         return (args) -> {
             // save a few customers
-            repository.save(new Customer("Jack", "Bauer"));
-            repository.save(new Customer("Chloe", "O'Brian"));
-            repository.save(new Customer("Kim", "Bauer"));
-            repository.save(new Customer("David", "Palmer"));
-            repository.save(new Customer("Michelle", "Dessler"));
-            repository.save(new Customer("1Jack", "Bauer"));
-            repository.save(new Customer("1Chloe", "O'Brian"));
-            repository.save(new Customer("1Kim", "Bauer"));
-            repository.save(new Customer("1David", "Palmer"));
-            repository.save(new Customer("1Michelle", "Dessler"));
-            repository.save(new Customer("2Jack", "Bauer"));
-            repository.save(new Customer("2Chloe", "O'Brian"));
-            repository.save(new Customer("2Kim", "Bauer"));
-            repository.save(new Customer("2David", "Palmer"));
-            repository.save(new Customer("2Michelle", "Dessler"));
-            repository.save(new Customer("3Jack", "Bauer"));
-            repository.save(new Customer("3Chloe", "O'Brian"));
-            repository.save(new Customer("3Kim", "Bauer"));
-            repository.save(new Customer("3David", "Palmer"));
-            repository.save(new Customer("3Michelle", "Dessler"));
-            repository.save(new Customer("4Jack", "Bauer"));
-            repository.save(new Customer("4Chloe", "O'Brian"));
-            repository.save(new Customer("4Kim", "Bauer"));
-            repository.save(new Customer("4David", "Palmer"));
-            repository.save(new Customer("4Michelle", "Dessler"));
+            customerRepository.save(new Customer("Jack", "Bauer"));
+            customerRepository.save(new Customer("Chloe", "O'Brian"));
+            customerRepository.save(new Customer("Kim", "Bauer"));
+            customerRepository.save(new Customer("David", "Palmer"));
+            customerRepository.save(new Customer("Michelle", "Dessler"));
+            customerRepository.save(new Customer("1Jack", "Bauer"));
+            customerRepository.save(new Customer("1Chloe", "O'Brian"));
+            customerRepository.save(new Customer("1Kim", "Bauer"));
+            customerRepository.save(new Customer("1David", "Palmer"));
+            customerRepository.save(new Customer("1Michelle", "Dessler"));
+            customerRepository.save(new Customer("2Jack", "Bauer"));
+            customerRepository.save(new Customer("2Chloe", "O'Brian"));
+            customerRepository.save(new Customer("2Kim", "Bauer"));
+            customerRepository.save(new Customer("2David", "Palmer"));
+            customerRepository.save(new Customer("2Michelle", "Dessler"));
+            customerRepository.save(new Customer("3Jack", "Bauer"));
+            customerRepository.save(new Customer("3Chloe", "O'Brian"));
+            customerRepository.save(new Customer("3Kim", "Bauer"));
+            customerRepository.save(new Customer("3David", "Palmer"));
+            customerRepository.save(new Customer("3Michelle", "Dessler"));
+            customerRepository.save(new Customer("4Jack", "Bauer"));
+            customerRepository.save(new Customer("4Chloe", "O'Brian"));
+            customerRepository.save(new Customer("4Kim", "Bauer"));
+            customerRepository.save(new Customer("4David", "Palmer"));
+            customerRepository.save(new Customer("4Michelle", "Dessler"));
 
             // fetch all customers
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
-            for (Customer customer : repository.findAll()) {
+            for (Customer customer : customerRepository.findAll()) {
                 log.info(customer.toString());
             }
-            log.info("");
-
-            // fetch an individual customer by ID
-            Customer customer = repository.findById(1L);
-            log.info("Customer found with findById(1L):");
-            log.info("--------------------------------");
-            log.info(customer.toString());
-            log.info("");
-
-            // fetch customers by last name
-            log.info("Customer found with findByLastName('Bauer'):");
-            log.info("--------------------------------------------");
-            repository.findByLastName("Bauer").forEach(bauer -> {
-                log.info(bauer.toString());
-            });
-            // for (Customer bauer : repository.findByLastName("Bauer")) {
-            //  log.info(bauer.toString());
-            // }
             log.info("");
         };
     }
