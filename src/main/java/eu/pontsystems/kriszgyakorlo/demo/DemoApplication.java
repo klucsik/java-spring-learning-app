@@ -1,7 +1,9 @@
 package eu.pontsystems.kriszgyakorlo.demo;
 
 import eu.pontsystems.kriszgyakorlo.demo.entity.Customer;
+import eu.pontsystems.kriszgyakorlo.demo.entity.Product;
 import eu.pontsystems.kriszgyakorlo.demo.repository.CustomerRepository;
+import eu.pontsystems.kriszgyakorlo.demo.repository.ProductRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -25,7 +27,7 @@ public class DemoApplication {
 
 
     @Bean
-    public CommandLineRunner demo(CustomerRepository customerRepository) {
+    public CommandLineRunner demo(CustomerRepository customerRepository, ProductRepository productRepository) {
         return (args) -> {
             // save a few customers
             customerRepository.save(new Customer("Jack", "Bauer"));
@@ -59,6 +61,18 @@ public class DemoApplication {
             log.info("-------------------------------");
             for (Customer customer : customerRepository.findAll()) {
                 log.info(customer.toString());
+            }
+            log.info("");
+
+            productRepository.save(new Product("Alma",0));
+            productRepository.save(new Product("Körte",100));
+            productRepository.save(new Product("Pari",1000));
+
+            // fetch all product
+            log.info("Product found with findAll():");
+            log.info("-------------------------------");
+            for (Product product : productRepository.findAll()) {
+                log.info(product.toString());
             }
             log.info("");
         };

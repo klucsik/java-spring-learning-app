@@ -33,6 +33,9 @@ public class Customer {
     private String hideThis; //a sample field which will not be accessible from DTO
     private String color; // a sample field which will be mapped to another named field in DTO
 
+    @OneToMany
+    private Set<Product> products;
+
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
