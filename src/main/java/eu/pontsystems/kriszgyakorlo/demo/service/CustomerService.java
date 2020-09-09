@@ -21,23 +21,23 @@ public class CustomerService {
     public CustomerDto find(Long id) {
         log.info(id.toString());
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(" Invalid user Id: " + id));
-        CustomerDto customerDto = CustomerMapper.INSTANCE.customerToCustomerDto(customer);
+        CustomerDto customerDto = CustomerMapper.INSTANCE.customerToDto(customer);
         return customerDto;
     }
 
     public Page<CustomerDto> list(Integer pageNumber, Integer pageSize) {
         Pageable pageparams = PageRequest.of(pageNumber - 1, pageSize); //shift the numbering start from 0 to 1 for humanreadable
         Page<Customer> customerPage = customerRepository.findAll(pageparams);
-        return customerPage.map(CustomerMapper.INSTANCE::customerToCustomerDto);
+        return customerPage.map(CustomerMapper.INSTANCE::customerToDto);
     }
 
     public void save(CustomerDto customerDto) {
-        Customer customer = CustomerMapper.INSTANCE.customerDtoToCustomer(customerDto);
+        Customer customer = CustomerMapper.INSTANCE.dtoToCustomer(customerDto);
         customerRepository.save(customer);
     }
 
     public void delete(CustomerDto customerDto) {
-        Customer customer = CustomerMapper.INSTANCE.customerDtoToCustomer(customerDto);
+        Customer customer = CustomerMapper.INSTANCE.dtoToCustomer(customerDto);
         customerRepository.delete(customer);
     }
 }

@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -29,7 +30,7 @@ public class Customer {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime lastUpdatedAt;
-    private String HideThis; //a sample field which will not be accessible from DTO
+    private String hideThis; //a sample field which will not be accessible from DTO
     private String color; // a sample field which will be mapped to another named field in DTO
 
 

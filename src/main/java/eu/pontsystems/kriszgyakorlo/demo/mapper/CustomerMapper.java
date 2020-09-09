@@ -11,10 +11,10 @@ public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
     @Mapping(source = "color", target = "favouriteColor")
-    CustomerDto customerToCustomerDto(Customer customer);
+    CustomerDto customerToDto(Customer customer);
 
     @Mapping(source = "favouriteColor", target = "color")
-    Customer customerDtoToCustomer(CustomerDto customerDto);
+    Customer dtoToCustomer(CustomerDto customerDto);
 
 
 }
