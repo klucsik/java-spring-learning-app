@@ -19,7 +19,6 @@ public class CustomerService {
     protected CustomerRepository customerRepository;
 
     public CustomerDto find(Long id) {
-        log.info(id.toString());
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(" Invalid user Id: " + id));
         CustomerDto customerDto = CustomerMapper.INSTANCE.customerToDto(customer);
         return customerDto;

@@ -10,6 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,8 +35,8 @@ public class Customer {
     private String hideThis; //a sample field which will not be accessible from DTO
     private String color; // a sample field which will be mapped to another named field in DTO
 
-    @OneToMany
-    private Set<Product> products;
+    @OneToMany(mappedBy = "customer")
+    private List<Product> products = new ArrayList<Product>();
 
 
     public Customer(String firstName, String lastName) {

@@ -66,7 +66,10 @@ public class DemoApplication {
 
             productRepository.save(new Product("Alma",0));
             productRepository.save(new Product("Körte",100));
-            productRepository.save(new Product("Pari",1000));
+            Customer owner_customer = new Customer("Paritulajdonos", "Béla");
+            customerRepository.save(owner_customer);
+            productRepository.save(new Product("Pari",1000,owner_customer));
+            productRepository.save(new Product("Pöri",4000,owner_customer));
 
             // fetch all product
             log.info("Product found with findAll():");

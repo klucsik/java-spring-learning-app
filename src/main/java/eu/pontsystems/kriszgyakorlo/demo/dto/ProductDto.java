@@ -1,6 +1,7 @@
 package eu.pontsystems.kriszgyakorlo.demo.dto;
 
 
+import eu.pontsystems.kriszgyakorlo.demo.entity.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +15,5 @@ public class ProductDto {
     private Integer Price;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdatedAt;
+    private CustomerDto customerDto;
 }

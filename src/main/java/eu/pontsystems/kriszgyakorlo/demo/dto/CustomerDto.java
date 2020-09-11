@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,5 +16,5 @@ public class CustomerDto {
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdatedAt;
     private String favouriteColor;
-    private Set<Product> products;
+    private List<ProductDto> productDtos;
 }

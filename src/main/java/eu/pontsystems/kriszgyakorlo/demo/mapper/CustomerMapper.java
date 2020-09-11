@@ -11,6 +11,7 @@ public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
     @Mapping(source = "color", target = "favouriteColor")
+    @Mapping(source = "products", target = "productDtos")
     CustomerDto customerToDto(Customer customer);
 
     @Mapping(source = "favouriteColor", target = "color")

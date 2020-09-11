@@ -40,6 +40,12 @@ public class Product {
         this.price=price;
     }
 
+    public Product(String name, Integer price, Customer customer) {
+        this.name=name;
+        this.price=price;
+        this.customer=customer;
+    }
+
     public String toString(){
         return String.format("Product[id=%d, Name='%s', Price='%s']", id, name, price);
     }
